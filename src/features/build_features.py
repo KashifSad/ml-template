@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import yaml
 
 max_features = yaml.safe_load(open('params.yaml','r'))['feature_engineering']['max_features']
@@ -22,7 +22,7 @@ x_test = test_features['content'].values
 y_test = test_features['sentiment'].values
 
 
-vectorizer = CountVectorizer(max_features=max_features)
+vectorizer = TfidfVectorizer(max_features=max_features)
 
 x_train_bow = vectorizer.fit_transform(x_train)
 x_test_bow = vectorizer.fit_transform(x_test)
@@ -40,6 +40,6 @@ test_df['labels'] = y_test
 data_path = os.path.join("data","processed")
 os.makedirs(data_path)
 
-train_df.to_csv(os.path.join(data_path,"train_bow.csv"))
-test_df.to_csv(os.path.join(data_path,"test_bow.csv"))
+train_df.to_csv(os.path.join(data_path,"train_tfidf.csv"))
+test_df.to_csv(os.path.join(data_path,"test_tfidf.csv"))
 
